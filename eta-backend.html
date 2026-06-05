@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Enovatte Ticketing Assistance - Backend System built with Go Language by Adrian Maulana Firdaus">
+    <title>ETA Backend · Adrian Maulana Firdaus</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { padding-bottom: 0; }
+        .eta-page { max-width: 960px; margin: 0 auto; padding: 50px 24px 80px; position: relative; }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 8px;
+            color: var(--text-muted); font-size: 0.875rem; font-weight: 600;
+            text-decoration: none; margin-bottom: 40px;
+            transition: var(--transition-smooth);
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .back-link:hover { color: var(--text-secondary); }
+        .back-link svg { width: 15px; height: 15px; fill: currentColor; }
+
+        .eta-hero {
+            background: rgba(14,14,14,0.8); border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 20px; padding: 40px; margin-bottom: 24px;
+            position: relative; overflow: hidden;
+        }
+        .eta-hero::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, #555, #bbb, #555, transparent);
+        }
+        .eta-hero-top {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            gap: 20px; flex-wrap: wrap; margin-bottom: 28px;
+        }
+        .eta-label {
+            font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1.5px; color: var(--text-muted);
+            border: 1px solid rgba(255,255,255,0.07); padding: 4px 12px; border-radius: 20px;
+            display: inline-block; margin-bottom: 12px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .eta-hero h1 {
+            font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #f0f0f0 0%, #888 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; line-height: 1.2; margin-bottom: 12px;
+        }
+        .eta-hero-sub { color: var(--text-secondary); font-size: 1rem; line-height: 1.7; max-width: 520px; }
+        .live-pill {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+            padding: 8px 16px; border-radius: 100px;
+            font-size: 0.82rem; font-weight: 600; color: #888; white-space: nowrap;
+        }
+        .live-dot {
+            width: 7px; height: 7px; border-radius: 50%; background: #aaa;
+            box-shadow: 0 0 6px rgba(200,200,200,0.4);
+            animation: blink 2s ease-in-out infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        .hero-meta { display: flex; flex-wrap: wrap; gap: 28px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .m-item { display: flex; flex-direction: column; gap: 3px; }
+        .m-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+        .m-val { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+
+        /* Stats */
+        .eta-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+        .stat-box {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px; padding: 20px 22px; transition: var(--transition-smooth);
+        }
+        .stat-box:hover { border-color: rgba(180,180,180,0.12); transform: translateY(-2px); }
+        .stat-num {
+            font-size: 2rem; font-weight: 800; letter-spacing: -1px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .stat-lbl { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
+        /* Cards */
+        .e-card {
+            background: rgba(14,14,14,0.8); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px; padding: 28px; margin-bottom: 16px;
+            transition: var(--transition-smooth);
+        }
+        .e-card:hover { border-color: rgba(150,150,150,0.12); background: rgba(18,18,18,0.8); }
+
+        .sec-hd {
+            font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 20px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .sec-hd::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.05); }
+
+        /* Tech tags */
+        .tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
+        .t-tag {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07);
+            color: var(--text-secondary); padding: 5px 12px; border-radius: 8px;
+            transition: var(--transition-smooth);
+        }
+        .t-tag:hover { border-color: rgba(180,180,180,0.18); color: var(--text-primary); }
+        .t-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+        /* Arch layers */
+        .a-layer {
+            display: flex; gap: 16px; align-items: flex-start;
+            background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px; padding: 16px 18px; margin-bottom: 10px;
+            transition: var(--transition-smooth);
+        }
+        .a-layer:hover { border-color: rgba(150,150,150,0.12); }
+        .a-num {
+            width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted);
+        }
+        .a-name { font-weight: 700; font-size: 0.9rem; color: var(--text-primary); margin-bottom: 3px; }
+        .a-desc { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 8px; }
+        .a-files { display: flex; flex-wrap: wrap; gap: 5px; }
+        .ff {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+            color: var(--text-muted); padding: 2px 8px; border-radius: 5px;
+        }
+        .ic { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #777; }
+
+        /* Modules */
+        .mod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .mod-box {
+            background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 10px; padding: 16px; transition: var(--transition-smooth);
+        }
+        .mod-box:hover { border-color: rgba(150,150,150,0.12); }
+        .mod-icon { font-size: 1.2rem; margin-bottom: 8px; }
+        .mod-name { font-weight: 700; font-size: 0.88rem; color: var(--text-primary); margin-bottom: 4px; }
+        .mod-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+        /* Endpoints */
+        .ep-row {
+            display: flex; align-items: center; gap: 12px;
+            background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 9px; padding: 10px 14px; margin-bottom: 7px;
+            transition: var(--transition-smooth);
+        }
+        .ep-row:hover { border-color: rgba(150,150,150,0.12); }
+        .meth {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 700;
+            padding: 3px 8px; border-radius: 5px; min-width: 52px; text-align: center;
+            flex-shrink: 0; border: 1px solid;
+        }
+        .m-g { color: #aaa; border-color: rgba(200,200,200,0.2); background: rgba(200,200,200,0.04); }
+        .m-p { color: #ccc; border-color: rgba(220,220,220,0.18); background: rgba(220,220,220,0.03); }
+        .m-u { color: #aaa; border-color: rgba(180,180,180,0.15); background: rgba(180,180,180,0.03); }
+        .m-d { color: #888; border-color: rgba(150,150,150,0.15); background: rgba(150,150,150,0.03); }
+        .m-pa { color: #999; border-color: rgba(170,170,170,0.15); background: rgba(170,170,170,0.03); }
+        .m-w { color: #bbb; border-color: rgba(200,200,200,0.18); background: rgba(200,200,200,0.03); }
+        .ep-path {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.76rem;
+            color: var(--text-secondary); flex: 1; overflow: hidden; text-overflow: ellipsis;
+        }
+        .ep-path em { color: #555; font-style: normal; }
+        .ep-note { font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; }
+
+        /* Highlights */
+        .hi-box {
+            display: flex; gap: 14px; align-items: flex-start; padding: 16px 18px;
+            margin-bottom: 10px; background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(255,255,255,0.05); border-radius: 12px;
+            transition: var(--transition-smooth);
+        }
+        .hi-box:hover { border-color: rgba(150,150,150,0.12); }
+        .hi-ic {
+            width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+            display: flex; align-items: center; justify-content: center; font-size: 0.95rem;
+        }
+        .hi-title { font-weight: 700; font-size: 0.88rem; color: var(--text-primary); margin-bottom: 4px; }
+        .hi-desc { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+        .hi-desc code {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+            background: rgba(255,255,255,0.05); padding: 1px 5px; border-radius: 4px; color: #aaa;
+        }
+
+        /* RBAC */
+        .rbac-wrap { overflow-x: auto; }
+        .rbac-t { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        .rbac-t th {
+            text-align: center; padding: 10px; color: var(--text-muted); font-weight: 700;
+            font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.8px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .rbac-t th:first-child { text-align: left; }
+        .rbac-t td {
+            padding: 9px 10px; text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.03); color: var(--text-muted);
+        }
+        .rbac-t td:first-child { text-align: left; color: var(--text-secondary); }
+        .rbac-t tr:last-child td { border-bottom: none; }
+        .rbac-t tr:hover td { background: rgba(255,255,255,0.02); }
+        .ry { color: #aaa; font-size: 1rem; }
+        .rn { color: rgba(255,255,255,0.1); font-size: 1rem; }
+        .rs { font-size: 0.72rem; color: #555; }
+        .role-pill {
+            display: inline-block; font-size: 0.68rem; font-weight: 700;
+            padding: 2px 9px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-secondary); background: rgba(255,255,255,0.04);
+        }
+
+        /* Migrations */
+        .mig-row {
+            display: flex; align-items: center; gap: 14px; padding: 11px 15px;
+            margin-bottom: 7px; background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(255,255,255,0.05); border-radius: 9px;
+            transition: var(--transition-smooth);
+        }
+        .mig-row:hover { border-color: rgba(150,150,150,0.1); }
+        .mig-n {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted);
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 6px; padding: 3px 8px; min-width: 50px; text-align: center; flex-shrink: 0;
+        }
+        .mig-name { font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; color: var(--text-secondary); flex: 1; }
+        .mig-desc { font-size: 0.75rem; color: var(--text-muted); text-align: right; }
+
+        /* Deploy */
+        .dep-row {
+            display: flex; gap: 14px; align-items: flex-start; padding: 14px 16px;
+            margin-bottom: 8px; background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(255,255,255,0.05); border-radius: 10px;
+            transition: var(--transition-smooth);
+        }
+        .dep-row:hover { border-color: rgba(150,150,150,0.1); }
+        .dep-num {
+            width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.72rem; font-weight: 700; color: var(--text-muted);
+        }
+        .dep-title { font-weight: 700; font-size: 0.88rem; color: var(--text-primary); margin-bottom: 3px; }
+        .dep-desc { font-size: 0.8rem; color: var(--text-secondary); }
+        .dep-desc code {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+            background: rgba(255,255,255,0.04); padding: 1px 5px; border-radius: 4px; color: #aaa;
+        }
+
+        /* Footer */
+        .eta-ft {
+            text-align: center; padding: 50px 0 0; color: var(--text-muted); font-size: 0.82rem;
+            border-top: 1px solid rgba(255,255,255,0.04); margin-top: 40px;
+        }
+        .eta-ft a { color: var(--text-secondary); transition: var(--transition-smooth); }
+        .eta-ft a:hover { color: var(--text-primary); }
+
+        @media(max-width:600px) {
+            .eta-stats { grid-template-columns: 1fr; }
+            .mod-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-blob blob-1"></div>
+    <div class="glow-blob blob-2"></div>
+    <div class="glow-blob blob-3"></div>
+
+    <div class="eta-page">
+
+        <!-- BACK -->
+        <a href="index.html" class="back-link">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            Back to Portfolio
+        </a>
+
+        <!-- HERO -->
+        <div class="eta-hero">
+            <div class="eta-hero-top">
+                <div>
+                    <div class="eta-label">Go Language &middot; Backend Engineering</div>
+                    <h1>Enovatte Ticketing<br>Assistance</h1>
+                    <p class="eta-hero-sub">
+                        A centralized backend system for internal ticket management, team collaboration, and quality control &mdash; deployed live at PT. Enovatte Rekayasa Digital.
+                    </p>
+                </div>
+                <div class="live-pill">
+                    <div class="live-dot"></div>
+                    Live in Production
+                </div>
+            </div>
+            <div class="hero-meta">
+                <div class="m-item"><div class="m-label">Role</div><div class="m-val">Backend Engineer</div></div>
+                <div class="m-item"><div class="m-label">Company</div><div class="m-val">PT. Enovatte Rekayasa Digital</div></div>
+                <div class="m-item"><div class="m-label">Timeline</div><div class="m-val">Nov 2023 &ndash; Present</div></div>
+                <div class="m-item"><div class="m-label">Database</div><div class="m-val">MySQL 8</div></div>
+                <div class="m-item"><div class="m-label">Server</div><div class="m-val">Linux VPS &middot; systemd</div></div>
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="eta-stats">
+            <div class="stat-box"><div class="stat-num">40+</div><div class="stat-lbl">API Endpoints</div></div>
+            <div class="stat-box"><div class="stat-num">10</div><div class="stat-lbl">Feature Modules</div></div>
+            <div class="stat-box"><div class="stat-num">14</div><div class="stat-lbl">DB Migrations</div></div>
+        </div>
+
+        <!-- TECH STACK -->
+        <div class="e-card">
+            <div class="sec-hd">Tech Stack</div>
+            <div class="tag-list">
+                <span class="t-tag"><span class="t-dot" style="background:#ccc"></span>Go 1.25</span>
+                <span class="t-tag"><span class="t-dot" style="background:#ccc"></span>go-chi v5</span>
+                <span class="t-tag"><span class="t-dot" style="background:#aaa"></span>MySQL 8</span>
+                <span class="t-tag"><span class="t-dot" style="background:#aaa"></span>sqlx</span>
+                <span class="t-tag"><span class="t-dot" style="background:#999"></span>golang-jwt v5</span>
+                <span class="t-tag"><span class="t-dot" style="background:#999"></span>bcrypt</span>
+                <span class="t-tag"><span class="t-dot" style="background:#bbb"></span>coder/websocket</span>
+                <span class="t-tag"><span class="t-dot" style="background:#888"></span>UUID v4</span>
+                <span class="t-tag"><span class="t-dot" style="background:#666"></span>godotenv</span>
+                <span class="t-tag"><span class="t-dot" style="background:#666"></span>go-chi/cors</span>
+                <span class="t-tag"><span class="t-dot" style="background:#555"></span>Linux VPS</span>
+                <span class="t-tag"><span class="t-dot" style="background:#555"></span>WinSCP &middot; SSH</span>
+                <span class="t-tag"><span class="t-dot" style="background:#555"></span>Postman</span>
+            </div>
+        </div>
+
+        <!-- ARCHITECTURE -->
+        <div class="e-card">
+            <div class="sec-hd">Clean Architecture &mdash; Layer Breakdown</div>
+
+            <div class="a-layer">
+                <div class="a-num">01</div>
+                <div>
+                    <div class="a-name">Router &amp; Entry Point</div>
+                    <div class="a-desc">HTTP server init, CORS, middleware injection, and all route registration under <span class="ic">/eta/v1</span></div>
+                    <div class="a-files"><span class="ff">main.go</span><span class="ff">go-chi v5</span></div>
+                </div>
+            </div>
+
+            <div class="a-layer">
+                <div class="a-num">02</div>
+                <div>
+                    <div class="a-name">Middleware</div>
+                    <div class="a-desc">JWT authentication guard, centralized error handling, and request logging</div>
+                    <div class="a-files">
+                        <span class="ff">middleware/auth.go</span>
+                        <span class="ff">middleware/error_helper.go</span>
+                        <span class="ff">middleware/logger.go</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="a-layer">
+                <div class="a-num">03</div>
+                <div>
+                    <div class="a-name">Handler (Controller)</div>
+                    <div class="a-desc">HTTP request parsing, input validation, RBAC enforcement, and JSON response formatting via helper</div>
+                    <div class="a-files">
+                        <span class="ff">handler/user_handler.go</span>
+                        <span class="ff">handler/thread_handler.go</span>
+                        <span class="ff">handler/qc_handler.go</span>
+                        <span class="ff">+ 8 more</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="a-layer">
+                <div class="a-num">04</div>
+                <div>
+                    <div class="a-name">Repository (Data Layer)</div>
+                    <div class="a-desc">Interface-driven MySQL operations via sqlx. Supports DB transactions, batch loading, and N+1 query prevention</div>
+                    <div class="a-files">
+                        <span class="ff">repository/users/</span>
+                        <span class="ff">repository/threads/</span>
+                        <span class="ff">repository/qc/</span>
+                        <span class="ff">+ 6 more</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="a-layer">
+                <div class="a-num">05</div>
+                <div>
+                    <div class="a-name">Entity (Model)</div>
+                    <div class="a-desc">Go structs with <span class="ic">db</span> tags for SQL mapping and <span class="ic">json</span> tags for API response serialization</div>
+                    <div class="a-files">
+                        <span class="ff">entity/user.go</span>
+                        <span class="ff">entity/thread.go</span>
+                        <span class="ff">entity/qc.go</span>
+                        <span class="ff">+ 6 more</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="a-layer">
+                <div class="a-num">06</div>
+                <div>
+                    <div class="a-name">Realtime Engine (WebSocket)</div>
+                    <div class="a-desc">In-memory room management with goroutine-safe sync.Mutex, 3s debounced DB sync, and graceful teardown</div>
+                    <div class="a-files">
+                        <span class="ff">realtime/hub.go</span>
+                        <span class="ff">realtime/room.go</span>
+                        <span class="ff">realtime/client.go</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULES -->
+        <div class="e-card">
+            <div class="sec-hd">Feature Modules</div>
+            <div class="mod-grid">
+                <div class="mod-box">
+                    <div class="mod-icon">&#128273;</div>
+                    <div class="mod-name">Auth &amp; Users</div>
+                    <div class="mod-desc">JWT-based register/login. Profile CRUD with bcrypt password hashing.</div>
+                </div>
+                <div class="mod-box">
+                    <div class="mod-icon">&#127970;</div>
+                    <div class="mod-name">Spaces (Workspace)</div>
+                    <div class="mod-desc">Multi-workspace management. Creator auto-assigned as admin.</div>
+                </div>
+                <div class="mod-box">
+                    <div class="mod-icon">&#128101;</div>
+                    <div class="mod-name">Collaborators</div>
+                    <div class="mod-desc">Role management (Admin, Member, Guest, QC) with invite and leave support.</div>
+                </div>
+                <div class="mod-box">
+                    <div class="mod-icon">&#127867;</div>
+                    <div class="mod-name">Threads (Ticketing)</div>
+                    <div class="mod-desc">Full ticket lifecycle: status, labels, assignees, pagination, and system event auto-logging.</div>
+                </div>
+                <div class="mod-box">
+                    <div class="mod-icon">&#128172;</div>
+                    <div class="mod-name">Comments &amp; History</div>
+                    <div class="mod-desc">Threaded comments with immutable system event logs on every ticket state change.</div>
+                </div>
+                <div class="mod-box">
+                    <div class="mod-icon">&#127991;</div>
+                    <div class="mod-name">Labels</div>
+                    <div class="mod-desc">Color-coded tagging system scoped per space. Admin-restricted CRUD.</div>
+                </div>
+                <div class="mod-box">
+                    <div class="mod-icon">&#9989;</div>
+                    <div class="mod-name">QC Forms</div>
+                    <div class="mod-desc">JSON-template checklist engine. Auto-resolves linked ticket on 100% pass.</div>
+                </div>
+                <div class="mod-box">
+                    <div class="mod-icon">&#128444;</div>
+                    <div class="mod-name">Whiteboard (Realtime)</div>
+                    <div class="mod-desc">Collaborative canvas over WebSocket with presence broadcast and debounced scene persistence.</div>
+                </div>
+                <div class="mod-box">
+                    <div class="mod-icon">&#128196;</div>
+                    <div class="mod-name">Space Documents</div>
+                    <div class="mod-desc">Multipart file upload (PDF, media, docs) scoped per space. Max 100 MB.</div>
+                </div>
+                <div class="mod-box">
+                    <div class="mod-icon">&#128221;</div>
+                    <div class="mod-name">Notes</div>
+                    <div class="mod-desc">Lightweight text/code notes per space. Creator and admin-only edit/delete.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KEY ENDPOINTS -->
+        <div class="e-card">
+            <div class="sec-hd">Key API Endpoints &nbsp;&middot;&nbsp; <span style="font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:#555;letter-spacing:0">Base: /eta/v1</span></div>
+
+            <div class="ep-row">
+                <span class="meth m-p">POST</span>
+                <span class="ep-path">/register &amp; /login</span>
+                <span class="ep-note">Auth &mdash; JWT-based</span>
+            </div>
+            <div class="ep-row">
+                <span class="meth m-g">GET</span>
+                <span class="ep-path">/spaces/<em>{space_id}</em>/threads</span>
+                <span class="ep-note">Paginated &middot; Batch-loaded</span>
+            </div>
+            <div class="ep-row">
+                <span class="meth m-p">POST</span>
+                <span class="ep-path">/spaces/<em>{space_id}</em>/threads</span>
+                <span class="ep-note">Create ticket</span>
+            </div>
+            <div class="ep-row">
+                <span class="meth m-u">PUT</span>
+                <span class="ep-path">/spaces/<em>{space_id}</em>/threads/<em>{thread_id}</em>/status</span>
+                <span class="ep-note">Status + auto-log</span>
+            </div>
+            <div class="ep-row">
+                <span class="meth m-pa">PATCH</span>
+                <span class="ep-path">/spaces/<em>{space_id}</em>/qc-forms/<em>{id}</em>/items/<em>{item_id}</em></span>
+                <span class="ep-note">QC item update</span>
+            </div>
+            <div class="ep-row">
+                <span class="meth m-p">POST</span>
+                <span class="ep-path">/spaces/<em>{space_id}</em>/qc-forms/<em>{id}</em>/submit</span>
+                <span class="ep-note">QC submit + auto-resolve</span>
+            </div>
+            <div class="ep-row">
+                <span class="meth m-w">WS</span>
+                <span class="ep-path">/spaces/<em>{space_id}</em>/whiteboards/<em>{id}</em>/ws</span>
+                <span class="ep-note">Realtime canvas</span>
+            </div>
+            <div class="ep-row">
+                <span class="meth m-p">POST</span>
+                <span class="ep-path">/spaces/<em>{space_id}</em>/notes</span>
+                <span class="ep-note">Create note</span>
+            </div>
+            <div class="ep-row">
+                <span class="meth m-d">DELETE</span>
+                <span class="ep-path">/upload/<em>{file_name}</em></span>
+                <span class="ep-note">Orphan file cleanup</span>
+            </div>
+        </div>
+
+        <!-- HIGHLIGHTS -->
+        <div class="e-card">
+            <div class="sec-hd">Technical Highlights</div>
+
+            <div class="hi-box">
+                <div class="hi-ic">&#9889;</div>
+                <div>
+                    <div class="hi-title">N+1 Query Prevention via Batch Loading</div>
+                    <div class="hi-desc">Thread list responses load Labels, Assignees, and Attachments via a single <code>sqlx.In</code> batch query each &mdash; eliminating N+1 entirely and keeping endpoints fast at scale.</div>
+                </div>
+            </div>
+
+            <div class="hi-box">
+                <div class="hi-ic">&#128203;</div>
+                <div>
+                    <div class="hi-title">Immutable System Event Logging</div>
+                    <div class="hi-desc">Every ticket status change auto-inserts a read-only system comment (<code>is_system_event = true</code>). These audit entries are fully protected from edit or delete by the API.</div>
+                </div>
+            </div>
+
+            <div class="hi-box">
+                <div class="hi-ic">&#127912;</div>
+                <div>
+                    <div class="hi-title">Debounced WebSocket Persistence</div>
+                    <div class="hi-desc">Whiteboard canvas updates are buffered in-memory and flushed to MySQL with a 3-second debounce timer. A final synchronous save runs on room teardown to prevent any data loss.</div>
+                </div>
+            </div>
+
+            <div class="hi-box">
+                <div class="hi-ic">&#128260;</div>
+                <div>
+                    <div class="hi-title">QC-to-Ticket Auto-Resolve Pipeline</div>
+                    <div class="hi-desc">When all QC form items pass, the system automatically transitions the linked ticket to <code>resolved</code> and inserts a system event comment &mdash; zero manual intervention required.</div>
+                </div>
+            </div>
+
+            <div class="hi-box">
+                <div class="hi-ic">&#128272;</div>
+                <div>
+                    <div class="hi-title">Centralized Error Middleware</div>
+                    <div class="hi-desc">All handlers return <code>error</code> instead of writing responses directly. <code>ErrorMiddleware</code> differentiates typed <code>AppError</code> (user-facing) from raw DB errors (500), preventing internal details from leaking.</div>
+                </div>
+            </div>
+
+            <div class="hi-box">
+                <div class="hi-ic">&#128737;</div>
+                <div>
+                    <div class="hi-title">Orphan File Protection on Delete</div>
+                    <div class="hi-desc">The <code>DELETE /upload/{file_name}</code> endpoint verifies a file is unclaimed before deletion. Returns <code>403 Forbidden</code> if it still belongs to any ticket or user profile.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RBAC -->
+        <div class="e-card">
+            <div class="sec-hd">Role-Based Access Control (RBAC) Matrix</div>
+            <div class="rbac-wrap">
+                <table class="rbac-t">
+                    <thead>
+                        <tr>
+                            <th>Action</th>
+                            <th><span class="role-pill">Admin</span></th>
+                            <th><span class="role-pill">Member</span></th>
+                            <th><span class="role-pill">Guest</span></th>
+                            <th><span class="role-pill">QC</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Create ticket</td><td class="ry">&#10003;</td><td class="ry">&#10003;</td><td class="ry">&#10003;</td><td class="ry">&#10003;</td></tr>
+                        <tr><td>Assign staff to ticket</td><td class="ry">&#10003;</td><td class="rn">&mdash;</td><td class="rn">&mdash;</td><td class="rn">&mdash;</td></tr>
+                        <tr><td>Change ticket status</td><td class="ry">&#10003;</td><td class="ry">&#10003;</td><td class="rs">close only</td><td class="ry">&#10003;</td></tr>
+                        <tr><td>Delete another's ticket</td><td class="ry">&#10003;</td><td class="rn">&mdash;</td><td class="rn">&mdash;</td><td class="rn">&mdash;</td></tr>
+                        <tr><td>Manage collaborators</td><td class="ry">&#10003;</td><td class="rn">&mdash;</td><td class="rn">&mdash;</td><td class="rn">&mdash;</td></tr>
+                        <tr><td>Create / Edit labels</td><td class="ry">&#10003;</td><td class="rn">&mdash;</td><td class="rn">&mdash;</td><td class="rn">&mdash;</td></tr>
+                        <tr><td>Update QC item result</td><td class="rn">&mdash;</td><td class="rn">&mdash;</td><td class="rn">&mdash;</td><td class="ry">&#10003;</td></tr>
+                        <tr><td>Submit / Reopen QC form</td><td class="rn">&mdash;</td><td class="rn">&mdash;</td><td class="rn">&mdash;</td><td class="ry">&#10003;</td></tr>
+                        <tr><td>Delete system event log</td><td class="rn">&mdash;</td><td class="rn">&mdash;</td><td class="rn">&mdash;</td><td class="rn">&mdash;</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- MIGRATIONS -->
+        <div class="e-card">
+            <div class="sec-hd">Database Migrations &mdash; 14 Total</div>
+            <div class="mig-row"><div class="mig-n">001</div><div class="mig-name">init_spaces_and_threads_schema</div><div class="mig-desc">Core tables: Users, Spaces, Threads, Labels, Collaborators</div></div>
+            <div class="mig-row"><div class="mig-n">002&ndash;008</div><div class="mig-name">schema_refinements</div><div class="mig-desc">Password, status enums, profile fields, guest/qc roles</div></div>
+            <div class="mig-row"><div class="mig-n">009</div><div class="mig-name">create_attachments_table</div><div class="mig-desc">File attachments linked to threads &amp; comments</div></div>
+            <div class="mig-row"><div class="mig-n">011</div><div class="mig-name">create_qc_tables</div><div class="mig-desc">QC forms + QC results with JSON template engine</div></div>
+            <div class="mig-row"><div class="mig-n">012</div><div class="mig-name">create_space_documents_table</div><div class="mig-desc">Space-scoped document uploads</div></div>
+            <div class="mig-row"><div class="mig-n">013</div><div class="mig-name">create_whiteboards_table</div><div class="mig-desc">Realtime collaborative canvas storage</div></div>
+            <div class="mig-row"><div class="mig-n">014</div><div class="mig-name">create_notes_table</div><div class="mig-desc">Lightweight text/code notes per space</div></div>
+        </div>
+
+        <!-- DEPLOYMENT -->
+        <div class="e-card">
+            <div class="sec-hd">Deployment Setup</div>
+
+            <div class="dep-row">
+                <div class="dep-num">1</div>
+                <div>
+                    <div class="dep-title">Cross-Compile for Linux</div>
+                    <div class="dep-desc">Built on Windows targeting Linux: <code>env GOOS=linux go build -o eta-api main.go</code></div>
+                </div>
+            </div>
+            <div class="dep-row">
+                <div class="dep-num">2</div>
+                <div>
+                    <div class="dep-title">Transfer via WinSCP</div>
+                    <div class="dep-desc">Binary uploaded to Linux VPS over SFTP using WinSCP client</div>
+                </div>
+            </div>
+            <div class="dep-row">
+                <div class="dep-num">3</div>
+                <div>
+                    <div class="dep-title">Service Management via systemd</div>
+                    <div class="dep-desc">Managed over SSH with <code>systemctl restart eta-api</code> on the production Linux host</div>
+                </div>
+            </div>
+            <div class="dep-row">
+                <div class="dep-num">4</div>
+                <div>
+                    <div class="dep-title">Environment Configuration</div>
+                    <div class="dep-desc">Runtime config via <code>.env</code> file &mdash; DATABASE_URL, PORT, BASE_URL, ALLOWED_ORIGINS, JWT_SECRET</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="eta-ft">
+            <p>Enovatte Ticketing Assistance &mdash; Backend System</p>
+            <p style="margin-top:6px">Built by <a href="index.html">Adrian Maulana Firdaus</a> &nbsp;&middot;&nbsp; PT. Enovatte Rekayasa Digital &nbsp;&middot;&nbsp; 2023&ndash;2026</p>
+        </div>
+
+    </div>
+
+    <script>
+        const io = new IntersectionObserver(function(entries) {
+            entries.forEach(function(e) {
+                if (e.isIntersecting) {
+                    e.target.style.opacity = '1';
+                    e.target.style.transform = 'translateY(0)';
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.04 });
+
+        var els = document.querySelectorAll('.e-card,.stat-box,.a-layer,.mod-box,.ep-row,.hi-box,.mig-row,.dep-row');
+        for (var i = 0; i < els.length; i++) {
+            els[i].style.opacity = '0';
+            els[i].style.transform = 'translateY(14px)';
+            els[i].style.transition = 'opacity 0.4s ease, transform 0.4s ease, border-color 0.3s';
+            io.observe(els[i]);
+        }
+    </script>
+</body>
+</html>

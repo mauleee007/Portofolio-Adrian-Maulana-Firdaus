@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Adrian Maulana Firdaus - Experienced Full Stack Developer specializing in Flutter and Go Language, based in Bandung, Indonesia.">
+    <meta name="keywords" content="Adrian Maulana Firdaus, Full Stack Developer, Flutter, Go Language, Golang, Android, Software Engineer, Portfolio, Bandung">
+    <meta name="author" content="Adrian Maulana Firdaus">
+    <title>Adrian Maulana Firdaus | Full Stack Developer Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Decorative Glow Blobs -->
+    <div class="glow-blob blob-1"></div>
+    <div class="glow-blob blob-2"></div>
+    <div class="glow-blob blob-3"></div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <div class="lightbox-inner">
+            <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+            <img id="lightbox-img" src="" alt="Preview">
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- HEADER / PROFILE HERO SECTION -->
+        <header>
+            <div class="profile-card">
+                <!-- Real Profile Photo -->
+                <div class="profile-avatar-container">
+                    <div class="profile-avatar-placeholder">
+                        <img src="assets/Photo Profile.png" alt="Adrian Maulana Firdaus">
+                    </div>
+                </div>
+
+                <!-- Profile Info -->
+                <div class="profile-info">
+                    <h1 class="profile-name">ADRIAN MAULANA FIRDAUS</h1>
+                    <div class="profile-title">
+                        Full Stack Developer
+                        <span>Flutter &amp; Go Specialist</span>
+                    </div>
+
+                    <div class="contact-grid">
+                        <div class="contact-item" onclick="copyContact('adrianfirdaus098@gmail.com', this)" title="Click to copy Email">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            </div>
+                            <div class="contact-text">
+                                <div class="contact-label">Email</div>
+                                <div class="contact-value">adrianfirdaus098@gmail.com</div>
+                            </div>
+                            <span class="tooltip">Copied!</span>
+                        </div>
+
+                        <div class="contact-item" onclick="copyContact('+6289508959552', this)" title="Click to copy Phone">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.82 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                            </div>
+                            <div class="contact-text">
+                                <div class="contact-label">Phone</div>
+                                <div class="contact-value">+62 895 0895 9552</div>
+                            </div>
+                            <span class="tooltip">Copied!</span>
+                        </div>
+
+                        <div class="contact-item" title="Bandung, Indonesia">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            </div>
+                            <div class="contact-text">
+                                <div class="contact-label">Location</div>
+                                <div class="contact-value">Bandung, Indonesia</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- NAVIGATION TAB BAR -->
+        <div class="tab-section">
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="switchTab('profile-tab')">
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    Profile &amp; Education
+                </button>
+                <button class="tab-btn" onclick="switchTab('projects-tab')">
+                    <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+                    Work &amp; Projects
+                </button>
+            </div>
+
+            <!-- ==================== TAB 1: PROFILE & EDUCATION ==================== -->
+            <div id="profile-tab" class="tab-content active">
+                <div class="grid-2col">
+
+                    <!-- LEFT: Intro & Skills -->
+                    <div style="display: flex; flex-direction: column; gap: 24px;">
+
+                        <!-- About Me -->
+                        <div class="card">
+                            <h2 class="section-title">
+                                <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#888;flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                                About Me
+                            </h2>
+                            <div class="intro-text">
+                                <p>
+                                    Experienced <strong>Full Stack Developer</strong> with a strong focus on the <strong>Flutter framework</strong> and <strong>Go Language</strong>, specializing in developing high-performance cross-platform applications.
+                                </p>
+                                <p>
+                                    My professional background includes expertise in Data Management for educational platforms, system integration, and digital content administration. Skilled at multitasking, able to work independently or collaboratively, quick to learn, and highly motivated by new challenges and technologies.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Skills -->
+                        <div class="card">
+                            <h2 class="section-title">
+                                <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#888;flex-shrink:0"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                                Core Skills &amp; Languages
+                            </h2>
+                            <div class="skills-container">
+                                <div class="skills-group">
+                                    <div class="skills-category">Hard Skills</div>
+                                    <div class="skills-list">
+                                        <span class="skill-tag">Flutter</span>
+                                        <span class="skill-tag">Dart</span>
+                                        <span class="skill-tag">Go Language (Golang)</span>
+                                        <span class="skill-tag">MySQL</span>
+                                        <span class="skill-tag">MongoDB</span>
+                                        <span class="skill-tag">Google Cloud Platform</span>
+                                        <span class="skill-tag">Linux CLI</span>
+                                        <span class="skill-tag">REST API Integration</span>
+                                        <span class="skill-tag">Application QA</span>
+                                    </div>
+                                </div>
+                                <div class="skills-group">
+                                    <div class="skills-category">Software Tools</div>
+                                    <div class="skills-list">
+                                        <span class="skill-tag">VS Code</span>
+                                        <span class="skill-tag">Android Studio</span>
+                                        <span class="skill-tag">Notion</span>
+                                        <span class="skill-tag">Miro</span>
+                                        <span class="skill-tag">Postman</span>
+                                        <span class="skill-tag">Microsoft Office</span>
+                                    </div>
+                                </div>
+                                <div class="skills-group">
+                                    <div class="skills-category">Soft Skills</div>
+                                    <div class="skills-list">
+                                        <span class="skill-tag">Teamwork</span>
+                                        <span class="skill-tag">Communication</span>
+                                        <span class="skill-tag">Public Speaking</span>
+                                    </div>
+                                </div>
+                                <div class="skills-group">
+                                    <div class="skills-category">Languages</div>
+                                    <div class="skills-list">
+                                        <span class="skill-tag" style="border-color:rgba(200,200,200,0.2);color:#e0e0e0;">English</span>
+                                        <span class="skill-tag">Indonesian (Native)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT: Education, Awards, Organization -->
+                    <div style="display: flex; flex-direction: column; gap: 24px;">
+
+                        <!-- Education -->
+                        <div class="card">
+                            <h2 class="section-title">
+                                <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#888;flex-shrink:0"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+                                Education
+                            </h2>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-meta">2021 – 2025</div>
+                                    <h3 class="timeline-title">STMIK AMIKBANDUNG University</h3>
+                                    <div class="timeline-sub">Bachelor of Informatics Engineering</div>
+                                    <div class="timeline-details">GPA: <strong style="color:#c8c8c8">3.22 / 4.00</strong> &nbsp;·&nbsp; Bandung, West Java</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Awards -->
+                        <div class="card">
+                            <h2 class="section-title">
+                                <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#888;flex-shrink:0"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v3c0 2.44 1.72 4.48 4 4.88V19c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2v-4.12c2.28-.4 4-2.44 4-4.88V7c0-1.1-.9-2-2-2zM5 10V7h2v3c0 1.1-.9 2-2 2zm14-2v2c0 1.1-.9 2-2 2V7h2z"/></svg>
+                                Awards &amp; Achievements
+                            </h2>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-meta">Jan 2025 – Jul 2025</div>
+                                    <h3 class="timeline-title">🥈 National 2nd Place Winner</h3>
+                                    <div class="timeline-sub">ICT Business Development Competition</div>
+                                    <div class="timeline-details">Faculty of Computer Science, Mercu Buana University</div>
+                                    <!-- Certificate Image -->
+                                    <div style="margin-top: 16px;">
+                                        <img
+                                            src="assets/sertifikat.webp"
+                                            alt="Award Certificate"
+                                            class="cert-img"
+                                            onclick="openLightbox(this.src)"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Organization -->
+                        <div class="card">
+                            <h2 class="section-title">
+                                <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#888;flex-shrink:0"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                                Organizational Experience
+                            </h2>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-meta">March 2024 – August 2024</div>
+                                    <h3 class="timeline-title">Head of Department</h3>
+                                    <div class="timeline-sub">Research, Innovation &amp; Education — Badan Eksekutif Mahasiswa (BEM)</div>
+                                    <ul class="exp-bullet-list" style="margin-top: 10px;">
+                                        <li><strong>Academic Collaboration:</strong> Facilitated research initiatives connecting students, faculty, and industry partners.</li>
+                                        <li><strong>Student Development:</strong> Organized innovation workshops and academic competitions for campus developers.</li>
+                                        <li><strong>Strategic Partnerships:</strong> Strengthened external networks to expand academic resource access.</li>
+                                        <li><strong>Capacity Building:</strong> Initiated training programs covering research methodologies and design.</li>
+                                        <li><strong>Event Management:</strong> Coordinated seminars and conferences to elevate education quality on campus.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== TAB 2: WORK & PROJECTS ==================== -->
+            <div id="projects-tab" class="tab-content">
+                <div class="experience-list">
+
+                    <!-- JOB 1: PT Enovatte -->
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <div class="exp-role-company">
+                                <h3>Full Stack Developer</h3>
+                                <div class="company">PT. Enovatte Rekayasa Digital</div>
+                            </div>
+                            <div class="exp-time-location">
+                                <span class="exp-time">Nov 2023 – Present</span>
+                                <span class="exp-location">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                    Bandung, West Java
+                                </span>
+                            </div>
+                        </div>
+
+                        <ul class="exp-bullet-list">
+                            <li><strong>App Development &amp; Maintenance:</strong> Developed and maintained the flagship IPTV application, "InfiniTV", ensuring optimal performance and user experience.</li>
+                            <li><strong>System Architecture:</strong> Designed and developed the backend architecture for "Enovatte Ticketing Assistance" — a centralized platform for efficient ticket management, real-time troubleshooting, and team coordination.</li>
+                            <li><strong>API &amp; Data Optimization:</strong> Implemented scalable database structures and RESTful APIs for reliable ticket tracking, automated reporting, and data integrity.</li>
+                            <li><strong>API Integration:</strong> Successfully integrated REST APIs connecting mobile apps with administrative backend systems.</li>
+                            <li><strong>Cross-Functional Collaboration:</strong> Coordinated with marketing and field technicians to align development with operational goals.</li>
+                            <li><strong>Testing &amp; Quality Assurance:</strong> Conducted rigorous testing and debugging, utilizing Postman for comprehensive API validation.</li>
+                            <li><strong>Release Management:</strong> Managed end-to-end deployment and release lifecycle for production users.</li>
+                        </ul>
+
+                        <div class="exp-achievement">
+                            <strong>Key Achievement</strong>
+                            <p>Successfully deployed "InfiniTV" IPTV application, currently operating in approximately 40 hotels and hospitals across Indonesia. Also designed the ticketing backend system to optimize cross-team field coordination.</p>
+                        </div>
+
+                        <!-- InfiniTV App Screenshots -->
+                        <div class="timeline-meta" style="margin-bottom: 12px;">InfiniTV — App Screenshots</div>
+                        <div class="img-gallery">
+                            <img class="gallery-img" src="assets/PT Enovatte Rekayasa Digital/INFINITV-IPTV/LandingPage.webp" alt="InfiniTV Landing Page" onclick="openLightbox(this.src)">
+                            <img class="gallery-img" src="assets/PT Enovatte Rekayasa Digital/INFINITV-IPTV/HomePage.webp" alt="InfiniTV Home Page" onclick="openLightbox(this.src)">
+                            <img class="gallery-img" src="assets/PT Enovatte Rekayasa Digital/INFINITV-IPTV/AdditionalPage1.webp" alt="InfiniTV Page 1" onclick="openLightbox(this.src)">
+                            <img class="gallery-img" src="assets/PT Enovatte Rekayasa Digital/INFINITV-IPTV/AdditionalPage2.webp" alt="InfiniTV Page 2" onclick="openLightbox(this.src)">
+                            <img class="gallery-img" src="assets/PT Enovatte Rekayasa Digital/INFINITV-IPTV/AdditionalPage3.webp" alt="InfiniTV Page 3" onclick="openLightbox(this.src)">
+                            <img class="gallery-img" src="assets/PT Enovatte Rekayasa Digital/INFINITV-IPTV/AdditionalPage4.webp" alt="InfiniTV Page 4" onclick="openLightbox(this.src)">
+                            <img class="gallery-img" src="assets/PT Enovatte Rekayasa Digital/INFINITV-IPTV/AdditionalPage5.webp" alt="InfiniTV Page 5" onclick="openLightbox(this.src)">
+                        </div>
+                    </div>
+
+                    <!-- JOB 2: Markas Susu Bandung -->
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <div class="exp-role-company">
+                                <h3>Android Developer</h3>
+                                <div class="company">
+                                    Markas Susu Bandung
+                                    <span class="exp-badge">Freelance</span>
+                                </div>
+                            </div>
+                            <div class="exp-time-location">
+                                <span class="exp-time">Aug 2020 – Nov 2020</span>
+                                <span class="exp-location">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                    Bandung, West Java
+                                </span>
+                            </div>
+                        </div>
+
+                        <ul class="exp-bullet-list">
+                            <li><strong>Android App Development:</strong> Contributed to the development of an Admin Android application using the Flutter framework.</li>
+                            <li><strong>UI/UX Implementation:</strong> Translated UI/UX designs into fully functional, responsive, and user-friendly mobile interfaces.</li>
+                            <li><strong>API Integration:</strong> Connected core app screens with backend services for inventory, orders, and distributor management.</li>
+                            <li><strong>Quality Assurance:</strong> Conducted testing and debugging sessions, including API validation using Postman, to guarantee application stability.</li>
+                        </ul>
+
+                        <!-- Markas Susu App Screenshots -->
+                        <div class="timeline-meta" style="margin-bottom: 12px;">Admin App — Screenshots</div>
+                        <div class="img-gallery">
+                            <img class="gallery-img" src="assets/Markas Susu Bandung/Login-page.png" alt="Login Page" onclick="openLightbox(this.src)">
+                            <img class="gallery-img" src="assets/Markas Susu Bandung/HomePage.png" alt="Home Page" onclick="openLightbox(this.src)">
+                            <img class="gallery-img" src="assets/Markas Susu Bandung/DataBarang.png" alt="Data Barang" onclick="openLightbox(this.src)">
+                            <img class="gallery-img" src="assets/Markas Susu Bandung/DataBarang2.png" alt="Data Barang 2" onclick="openLightbox(this.src)">
+                            <img class="gallery-img" src="assets/Markas Susu Bandung/DataBarang3.png" alt="Data Barang 3" onclick="openLightbox(this.src)">
+                        </div>
+                    </div>
+
+                    <!-- JOB 3: PT Media Kotak Pintar (Edubox) -->
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <div class="exp-role-company">
+                                <h3>Data Entry Specialist</h3>
+                                <div class="company">
+                                    PT. Media Kotak Pintar (Edubox)
+                                    <span class="exp-badge">Internship</span>
+                                </div>
+                            </div>
+                            <div class="exp-time-location">
+                                <span class="exp-time">Apr 2020 – Jul 2020</span>
+                                <span class="exp-location">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                    Bandung, West Java
+                                </span>
+                            </div>
+                        </div>
+
+                        <ul class="exp-bullet-list">
+                            <li><strong>Educational Content Management:</strong> Managed a digital platform containing learning materials used by elementary, middle, and high schools.</li>
+                            <li><strong>Data Entry &amp; Categorization:</strong> Systematically inputted and organized teaching media based on curriculum levels and subject categories.</li>
+                            <li><strong>Quality Control:</strong> Coordinated closely with the editorial team to cross-check data accuracy and prevent indexing errors.</li>
+                            <li><strong>Database Administration:</strong> Maintained database consistency to ensure high accessibility for classroom devices across institutions.</li>
+                        </ul>
+
+                        <div style="margin-top: 16px; padding: 14px 18px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px;">
+                            <div class="timeline-meta" style="margin-bottom: 6px;">Note</div>
+                            <p style="font-size: 0.88rem; color: var(--text-muted);">No shareable application screenshots available for this internship role. The Edubox platform is a proprietary internal system.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer>
+            <p>&copy; <span id="current-year"></span> Adrian Maulana Firdaus. All rights reserved.</p>
+            <p>Built with standard HTML5, CSS3 &amp; Vanilla JavaScript</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

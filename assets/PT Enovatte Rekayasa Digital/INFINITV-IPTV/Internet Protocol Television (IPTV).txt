@@ -1,0 +1,11 @@
+Internet Protocol Television (IPTV) "InfiniTV" : Produk Unggulan PT. Enovatte Rekayasa Digital Aplikasi Android IPTV
+
+Task : Mengembangkan aplikasi IPTV dengan menggunakan Framework Flutter untuk Android TV
+
+Merancang tampilan aplikasi berdasarkan design UI
+Membuat aplikasi responsif serta ringan
+Membuat kostum navigasi dan integrasi aplikasi dengan remote Android TV
+Integrasi aplikasi dengan REST API
+Menganalisa dan melakukan perawatan aplikasi berdasarkan laporan pengguna
+Mengembangkan fitur-fitur baru pada aplikasi
+Deskripsi project : Aplikasi "InfiniTV" merupakan sebuah produk aplikasi pada Android TV yang dapat memuat konten, tayangan baik video on demand(VOD) maupun siaran televisi nasional dan internasional yang memungkinkan pengalaman pengguna yang lebih variatif, informatif, serta penggunaan yang praktis.

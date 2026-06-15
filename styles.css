@@ -601,3 +601,82 @@ footer a:hover { color: var(--text-primary); }
     .tab-btn { padding: 10px 12px; font-size: 0.82rem; }
     .img-gallery { grid-template-columns: 1fr 1fr; }
 }
+
+/* --- MARQUEE (Client Logo Strip) --- */
+@keyframes marquee-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.marquee-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-muted);
+    border-left: 2px solid #444;
+    padding-left: 8px;
+    margin-top: 28px;
+    margin-bottom: 14px;
+}
+
+.marquee-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius-sm);
+    background: rgba(255, 255, 255, 0.01);
+    padding: 16px 0;
+    /* Fade edges */
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+    );
+}
+
+.marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    width: max-content;
+    animation: marquee-scroll 40s linear infinite;
+}
+
+/* Pause on hover */
+.marquee-wrapper:hover .marquee-track {
+    animation-play-state: paused;
+}
+
+.marquee-item {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+}
+
+.marquee-item img {
+    max-width: 110px;
+    max-height: 50px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    opacity: 0.8;
+    transition: var(--transition-smooth);
+}
+
+.marquee-item img:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}

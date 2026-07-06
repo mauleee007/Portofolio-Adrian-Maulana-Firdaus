@@ -326,6 +326,10 @@
                 <span class="t-tag"><span class="t-dot" style="background:#555"></span>Linux VPS</span>
                 <span class="t-tag"><span class="t-dot" style="background:#555"></span>WinSCP &middot; SSH</span>
                 <span class="t-tag"><span class="t-dot" style="background:#555"></span>Postman</span>
+                <span class="t-tag"><span class="t-dot" style="background:#888"></span>swaggo/swag</span>
+                <span class="t-tag"><span class="t-dot" style="background:#bbb"></span>Google Cloud Platform</span>
+                <span class="t-tag"><span class="t-dot" style="background:#aaa"></span>CI/CD Pipeline</span>
+                <span class="t-tag"><span class="t-dot" style="background:#888"></span>systemd</span>
             </div>
         </div>
 
@@ -519,6 +523,57 @@
             </div>
         </div>
 
+        <!-- SWAGGER API DOCS -->
+        <div class="e-card">
+            <div class="sec-hd">API Documentation &mdash; Swagger / OpenAPI</div>
+
+            <div class="hi-box" style="margin-bottom:12px">
+                <div class="hi-ic">&#128218;</div>
+                <div>
+                    <div class="hi-title">Integrated with Swagger UI</div>
+                    <div class="hi-desc">
+                        The ETA Backend exposes a live interactive API documentation interface via <code>swaggo/swag</code> &mdash;
+                        automatically generated from inline Go annotations on every handler.
+                        Accessible at <code>/eta/v1/swagger/</code> on the production server.
+                    </div>
+                </div>
+            </div>
+
+            <div class="hi-box" style="margin-bottom:12px">
+                <div class="hi-ic">&#128196;</div>
+                <div>
+                    <div class="hi-title">OpenAPI 2.0 Contract (JSON / YAML)</div>
+                    <div class="hi-desc">
+                        The full API contract is auto-exported as <code>docs/swagger.json</code> and <code>docs/swagger.yaml</code>
+                        via <code>swag init</code>, providing a machine-readable spec for frontend integration,
+                        Postman import, and third-party tooling.
+                    </div>
+                </div>
+            </div>
+
+            <div class="hi-box" style="margin-bottom:16px">
+                <div class="hi-ic">&#9989;</div>
+                <div>
+                    <div class="hi-title">Annotations Coverage</div>
+                    <div class="hi-desc">
+                        Every endpoint is annotated with request body schema, response models, auth requirements (<code>BearerAuth</code>),
+                        and grouped by module tag (auth, spaces, threads, qc, whiteboard, notes, upload).
+                        This ensures the contract stays in sync with the implementation automatically.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tech tags for Swagger -->
+            <div class="tag-list" style="margin-top:4px">
+                <span class="t-tag"><span class="t-dot" style="background:#ccc"></span>swaggo/swag</span>
+                <span class="t-tag"><span class="t-dot" style="background:#bbb"></span>swaggo/http-swagger</span>
+                <span class="t-tag"><span class="t-dot" style="background:#aaa"></span>OpenAPI 2.0</span>
+                <span class="t-tag"><span class="t-dot" style="background:#888"></span>swagger.json</span>
+                <span class="t-tag"><span class="t-dot" style="background:#888"></span>swagger.yaml</span>
+                <span class="t-tag"><span class="t-dot" style="background:#666"></span>BearerAuth (JWT)</span>
+            </div>
+        </div>
+
         <!-- HIGHLIGHTS -->
         <div class="e-card">
             <div class="sec-hd">Technical Highlights</div>
@@ -615,7 +670,7 @@
 
         <!-- DEPLOYMENT -->
         <div class="e-card">
-            <div class="sec-hd">Deployment Setup</div>
+            <div class="sec-hd">Deployment &amp; CI/CD Setup</div>
 
             <div class="dep-row">
                 <div class="dep-num">1</div>
@@ -624,6 +679,7 @@
                     <div class="dep-desc">Built on Windows targeting Linux: <code>env GOOS=linux go build -o eta-api main.go</code></div>
                 </div>
             </div>
+
             <div class="dep-row">
                 <div class="dep-num">2</div>
                 <div>
@@ -631,19 +687,50 @@
                     <div class="dep-desc">Binary uploaded to Linux VPS over SFTP using WinSCP client</div>
                 </div>
             </div>
-            <div class="dep-row">
-                <div class="dep-num">3</div>
+
+            <div class="dep-row" style="border-color:rgba(200,200,200,0.1)">
+                <div class="dep-num" style="border-color:rgba(200,200,200,0.18);color:#bbb">3</div>
                 <div>
-                    <div class="dep-title">Service Management via systemd</div>
-                    <div class="dep-desc">Managed over SSH with <code>systemctl restart eta-api</code> on the production Linux host</div>
+                    <div class="dep-title">GCP Cloud Integration via CI/CD</div>
+                    <div class="dep-desc">
+                        The backend is integrated with <strong style="color:var(--text-primary)">Google Cloud Platform (GCP)</strong> as the production cloud environment.
+                        A CI/CD pipeline automates the build and deployment process &mdash; on every push to the main branch,
+                        the binary is compiled, transferred, and the service is reloaded on the GCP Linux instance without manual SSH intervention.
+                    </div>
                 </div>
             </div>
+
             <div class="dep-row">
                 <div class="dep-num">4</div>
+                <div>
+                    <div class="dep-title">Service Management via systemd (Linux)</div>
+                    <div class="dep-desc">
+                        The Go binary runs as a persistent background service managed by <code>systemd</code> on the GCP Linux host.
+                        The service is defined via a <code>.service</code> unit file and controlled with
+                        <code>systemctl start / stop / restart eta-api</code>.
+                        On reboot, <code>systemd</code> automatically restarts the service via <code>Restart=always</code>,
+                        ensuring zero-downtime recovery.
+                    </div>
+                </div>
+            </div>
+
+            <div class="dep-row">
+                <div class="dep-num">5</div>
                 <div>
                     <div class="dep-title">Environment Configuration</div>
                     <div class="dep-desc">Runtime config via <code>.env</code> file &mdash; DATABASE_URL, PORT, BASE_URL, ALLOWED_ORIGINS, JWT_SECRET</div>
                 </div>
+            </div>
+
+            <!-- CI/CD tech tags -->
+            <div class="tag-list" style="margin-top:18px">
+                <span class="t-tag"><span class="t-dot" style="background:#ccc"></span>Google Cloud Platform</span>
+                <span class="t-tag"><span class="t-dot" style="background:#bbb"></span>GCP Compute Engine</span>
+                <span class="t-tag"><span class="t-dot" style="background:#aaa"></span>CI/CD Pipeline</span>
+                <span class="t-tag"><span class="t-dot" style="background:#888"></span>systemd</span>
+                <span class="t-tag"><span class="t-dot" style="background:#888"></span>Restart=always</span>
+                <span class="t-tag"><span class="t-dot" style="background:#666"></span>Linux VPS</span>
+                <span class="t-tag"><span class="t-dot" style="background:#555"></span>WinSCP &middot; SSH</span>
             </div>
         </div>
 

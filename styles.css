@@ -485,6 +485,52 @@ header { padding: 60px 0 40px; position: relative; }
 
 .exp-achievement p { color: var(--text-primary); line-height: 1.65; }
 
+/* --- SKILL TAGS PER EXPERIENCE --- */
+.exp-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.exp-skill-tag {
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid;
+    transition: var(--transition-smooth);
+}
+
+/* Hard / Technical skills */
+.exp-skill-tag.tech {
+    color: #b0b0b0;
+    background: rgba(200, 200, 200, 0.04);
+    border-color: rgba(180, 180, 180, 0.14);
+}
+
+.exp-skill-tag.tech:hover {
+    color: #e0e0e0;
+    border-color: rgba(200, 200, 200, 0.28);
+    background: rgba(200, 200, 200, 0.08);
+}
+
+/* Soft skills */
+.exp-skill-tag.soft {
+    color: #888;
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.exp-skill-tag.soft:hover {
+    color: #aaa;
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+
 /* --- IMAGE GALLERY --- */
 .img-gallery {
     display: grid;

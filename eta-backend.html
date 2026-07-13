@@ -304,8 +304,8 @@
 
         <!-- STATS -->
         <div class="eta-stats">
-            <div class="stat-box"><div class="stat-num">40+</div><div class="stat-lbl">API Endpoints</div></div>
-            <div class="stat-box"><div class="stat-num">10</div><div class="stat-lbl">Feature Modules</div></div>
+            <div class="stat-box"><div class="stat-num">45+</div><div class="stat-lbl">API Endpoints</div></div>
+            <div class="stat-box"><div class="stat-num">11</div><div class="stat-lbl">Feature Modules</div></div>
             <div class="stat-box"><div class="stat-num">14</div><div class="stat-lbl">DB Migrations</div></div>
         </div>
 
@@ -330,6 +330,7 @@
                 <span class="t-tag"><span class="t-dot" style="background:#bbb"></span>Google Cloud Platform</span>
                 <span class="t-tag"><span class="t-dot" style="background:#aaa"></span>CI/CD Pipeline</span>
                 <span class="t-tag"><span class="t-dot" style="background:#888"></span>systemd</span>
+                <span class="t-tag"><span class="t-dot" style="background:#ccc"></span>Server-Sent Events (SSE)</span>
             </div>
         </div>
 
@@ -469,6 +470,11 @@
                     <div class="mod-name">Notes</div>
                     <div class="mod-desc">Lightweight text/code notes per space. Creator and admin-only edit/delete.</div>
                 </div>
+                <div class="mod-box">
+                    <div class="mod-icon">&#128276;</div>
+                    <div class="mod-name">Notifications (SSE)</div>
+                    <div class="mod-desc">Real-time in-app push notifications via Server-Sent Events &mdash; custom built without heavy libraries. One persistent HTTP connection per user delivers events instantly.</div>
+                </div>
             </div>
         </div>
 
@@ -520,6 +526,11 @@
                 <span class="meth m-d">DELETE</span>
                 <span class="ep-path">/upload/<em>{file_name}</em></span>
                 <span class="ep-note">Orphan file cleanup</span>
+            </div>
+            <div class="ep-row">
+                <span class="meth m-g" style="color:#ddd;border-color:rgba(230,230,230,0.25);background:rgba(230,230,230,0.05)">SSE</span>
+                <span class="ep-path">/notifications/subscribe</span>
+                <span class="ep-note">Realtime push &middot; no library</span>
             </div>
         </div>
 
@@ -623,6 +634,22 @@
                 <div>
                     <div class="hi-title">Orphan File Protection on Delete</div>
                     <div class="hi-desc">The <code>DELETE /upload/{file_name}</code> endpoint verifies a file is unclaimed before deletion. Returns <code>403 Forbidden</code> if it still belongs to any ticket or user profile.</div>
+                </div>
+            </div>
+
+            <div class="hi-box">
+                <div class="hi-ic">&#128276;</div>
+                <div>
+                    <div class="hi-title">Custom Server-Sent Events (SSE) — No Heavy Library</div>
+                    <div class="hi-desc">
+                        Real-time in-app notifications are delivered via a fully custom SSE implementation built using only Go's standard <code>net/http</code> package.
+                        Each authenticated user opens one persistent <code>GET /notifications/subscribe</code> connection that streams
+                        <code>text/event-stream</code> data directly to the client.
+                        A goroutine-safe in-memory registry (protected by <code>sync.Mutex</code>) tracks all active connections,
+                        and a periodic heartbeat comment (<code>: ping</code>) is sent every 30 seconds to keep the connection alive through proxies and load balancers.
+                        When a relevant event occurs &mdash; such as a ticket update, assignment change, or QC submission &mdash; the server pushes a JSON payload
+                        instantly to the affected user's stream without polling.
+                    </div>
                 </div>
             </div>
         </div>
